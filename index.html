@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Shop Homepage - Start Bootstrap Template</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!">Simple Website</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Cart Dropdown -->
+                    <div class="dropdown">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill" id="cart-count">0</span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end p-3" id="cart-dropdown" style="min-width: 300px;">
+                            <li><h6 class="dropdown-header">Your Cart</h6></li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <div id="cart-items">
+                                <p class="text-muted small px-2">Cart is empty</p>
+                            </div>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li><p class="px-2 fw-bold" id="cart-total">Total: $0.00</p></li>
+                            <li>
+                                <a href="#" class="btn btn-dark w-100" onclick="document.getElementById('order-form').scrollIntoView({behavior: 'smooth'})">Place Order</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header-->
+        <header class="bg-white py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-dark">
+                    <h1 class="display-4 fw-bolder">Welcome! This is our product right now!</h1>
+                    <p class="lead fw-normal text-dark-50 mb-0">More will come!</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Products Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" id="product-container">
+                </div>
+            </div>
+        </section>
+
+        <!-- Order Form -->
+        <section class="py-5 bg-light">
+            <div class="container px-4 px-lg-5">
+                <h2 class="fw-bolder mb-4">Place Order</h2>
+                <form id="order-form">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Your name" />
+                        <div class="text-danger small" id="name-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="123 456 78 90" />
+                        <div class="text-danger small" id="phone-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="text" id="email" class="form-control" placeholder="test@example.com" />
+                        <div class="text-danger small" id="email-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Street Address</label>
+                        <input type="text" id="street" class="form-control" placeholder="Storgatan 1" />
+                        <div class="text-danger small" id="street-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Postal Code</label>
+                        <input type="text" id="postal" class="form-control" placeholder="12345" />
+                        <div class="text-danger small" id="postal-error"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">City</label>
+                        <input type="text" id="city" class="form-control" placeholder="Stockholm" />
+                        <div class="text-danger small" id="city-error"></div>
+                    </div>
+                    <button type="submit" class="btn btn-dark">Place Order</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
