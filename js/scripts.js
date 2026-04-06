@@ -90,8 +90,10 @@ document.getElementById("order-form").addEventListener("submit", function(e) {
     let valid = true;
 
     const name = document.getElementById("name").value.trim();
-    if (name.length < 2 || name.length > 50) {
-        document.getElementById("name-error").textContent = "Name must be between 2 and 50 characters.";
+    const nameRegex = /^[a-zA-zåäöÅÄÖ\s]+$/;
+
+    if (name.length < 2 || name.length > 50 || !nameRegex.test(name)) {
+        document.getElementById("name-error").textContent = "Name must be between 2 and 50 characters and only contain letters. ";
         valid = false;
     } else {
         document.getElementById("name-error").textContent = "";
