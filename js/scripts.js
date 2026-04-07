@@ -17,20 +17,37 @@ fetch("https://fakestoreapi.com/products")
     .then(res => res.json())
     .then(products => {
         products.forEach(product => {
+            // Här kortar vi ner beskrivningen och titeln direkt i templaten
+            const shortTitle = product.title.substring(0, 20);
+            const shortDesc = product.description.substring(0, 50) + "...";
+
             const card = `
                 <div class="col mb-5">
-                    <div class="card h-100 p-3">
-                        <img src="${product.image}" style="height: 150px; object-fit: contain;">
-                        <h5 class="mt-2">${product.title.substring(0, 20)}...</h5>
-                        <p class="small text-muted">${product.description.substring(0, 50)}...</p>
-                        <p class="fw-bold">$${product.price}</p>
-                        <button class="btn btn-dark" onclick="addToCart('${product.title.replace(/'/g, "\\'")}', ${product.price})">
-                            Köp
-                        </button>
+                    <div class="card h-100">
+                        <img class="card-img-top p-3" src="${product.image}" style="height: 250px; object-fit: contain;" />
+                        <div class="card-body p-4">
+                            <div class="text-center">                            
+                                <h5 class="fw-bolder">${shortTitle}</h5>
+                                <p class="text-muted small">${product.category}</p>
+                                <p class="small">${shortDesc}</p>
+                                <p class="fw-bold">$${product.price}</p>
+                            </div>
+                        </div>
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <button class="btn btn-outline-dark mt-auto" 
+                                    onclick="addToCart('${product.title.replace(/'/g, "\\'")}', ${product.price})">
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>`;
+                </div>
+            `;
             document.getElementById("product-container").innerHTML += card;
         });
+        // Vi behöver inte document.querySelectorAll(".add-to-cart") längre 
+        // eftersom vi använder onclick direkt på knappen ovan.
     });
 
 document.getElementById("order-form").addEventListener("submit", function(e) {
