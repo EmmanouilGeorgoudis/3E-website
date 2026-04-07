@@ -2,39 +2,28 @@ let cart = [];
 
 // Använder en dropdown funktion för själva carten kolla på denna!
 function updateCart() {
-    const cartItems = document.getElementById("cart-items");
-    const cartCount = document.getElementById("cart-count");
-    const cartTotal = document.getElementById("cart-total");
+    var cartItems = document.getElementById("cart-items");
+    var cartCount = document.getElementById("cart-count");
+    var cartTotal = document.getElementById("cart-total");
 
+    // Uppdatera siffran på varukorgs-ikonen
     cartCount.textContent = cart.length;
 
     if (cart.length === 0) {
-        cartItems.innerHTML = `<p class="text-muted small px-2">Cart is empty</p>`;
+        // Om tom
+        cartItems.innerHTML = '<p class="text-muted small px-2">Cart is empty</p>';
         cartTotal.textContent = "Total: $0.00";
-        return;
+    } 
+    else {
+        // Om det finns något: hämta den sista produkten som lades till
+        var lastItem = cart[cart.length - 1];
+
+        // Visa bara den produkten (ingen loop behövs)
+        cartItems.innerHTML = '<li class="px-2 small">' + lastItem.title + ' - $' + lastItem.price + '</li>';
+        
+        // Uppdatera priset direkt från produkten
+        cartTotal.textContent = "Total: $" + lastItem.price;
     }
-
-    let total = 0;
-    cartItems.innerHTML = "";
-
-    cart.forEach((item, index) => {
-        total += item.price;
-        cartItems.innerHTML += `
-            <li class="d-flex justify-content-between align-items-center px-2 mb-2">
-                <span class="small" style="max-width: 180px;">${item.title}</span>
-                <span class="small fw-bold">$${item.price}</span>
-                <button class="btn btn-sm btn-danger ms-2" onclick="removeFromCart(${index})">✕</button>
-            </li>
-        `;
-    });
-
-    cartTotal.textContent = `Total: $${total.toFixed(2)}`;
-}
-
-// Hur man tar bort saker från caten
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
 }
 
 // Fetch products (Hur API nyckeln läggs in) 
