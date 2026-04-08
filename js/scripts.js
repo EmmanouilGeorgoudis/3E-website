@@ -1,47 +1,47 @@
 let cart = [];
 
-// Använder en dropdown funktion för själva carten kolla på denna!
 function updateCart() {
     const cartItems = document.getElementById("cart-items");
     const cartCount = document.getElementById("cart-count");
     const cartTotal = document.getElementById("cart-total");
 
-    cartCount.textContent = cart.length;
+    let totalItems = 0;
+    let total = 0;
 
     if (cart.length === 0) {
         cartItems.innerHTML = `<p class="text-muted small px-2">Cart is empty</p>`;
         cartTotal.textContent = "Total: $0.00";
+        cartCount.textContent = 0;
         return;
     }
 
-    let total = 0;
     cartItems.innerHTML = "";
 
     cart.forEach((item, index) => {
-        total += item.price;
+        totalItems += item.quantity;
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
         cartItems.innerHTML += `
             <li class="d-flex justify-content-between align-items-center px-2 mb-2">
-                <span class="small" style="max-width: 180px;">${item.title}</span>
-                <span class="small fw-bold">$${item.price}</span>
+                <span class="small" style="max-width: 150px;">${item.title} (x${item.quantity})</span>
+                <span class="small fw-bold">$${itemTotal.toFixed(2)}</span>
                 <button class="btn btn-sm btn-danger ms-2" onclick="removeFromCart(${index})">✕</button>
             </li>
         `;
     });
 
+    cartCount.textContent = totalItems;
     cartTotal.textContent = `Total: $${total.toFixed(2)}`;
 }
 
-// Hur man tar bort saker från caten
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCart();
 }
 
-// Fetch products (Hur API nyckeln läggs in) 
 fetch("https://fakestoreapi.com/products")
     .then(res => res.json())
     .then(products => {
-// Hur själva "kortet ska se ut alltså hur produkterna ska synas (ÄNDRA DESCRIPTION) Gör den "kortare" via substring"
         products.forEach(product => {
             const card = `
                 <div class="col mb-5">
@@ -57,6 +57,11 @@ fetch("https://fakestoreapi.com/products")
                         </div>
                         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                             <div class="text-center">
+                                <div class="d-flex justify-content-center align-items-center mb-2">
+                                    <button class="btn btn-sm btn-outline-secondary quantity-btn" data-action="decrease">-</button>
+                                    <span class="mx-3 quantity-display" data-quantity="1">1</span>
+                                    <button class="btn btn-sm btn-outline-secondary quantity-btn" data-action="increase">+</button>
+                                </div>
                                 <a href="#" class="btn btn-outline-dark mt-auto add-to-cart"
                                     data-title="${product.title}"
                                     data-price="${product.price}">
@@ -70,21 +75,51 @@ fetch("https://fakestoreapi.com/products")
             document.getElementById("product-container").innerHTML += card;
         });
 
-        // Add to cart funktionen ( kolla här) 
+        // Quantity buttons functionality
+        document.querySelectorAll(".quantity-btn").forEach(button => {
+            button.addEventListener("click", (e) => {
+                e.preventDefault();
+                const card = button.closest(".card");
+                const quantityDisplay = card.querySelector(".quantity-display");
+                let quantity = parseInt(quantityDisplay.getAttribute("data-quantity"));
+                
+                if (button.getAttribute("data-action") === "increase") {
+                    quantity++;
+                } else if (button.getAttribute("data-action") === "decrease" && quantity > 1) {
+                    quantity--;
+                }
+                
+                quantityDisplay.textContent = quantity;
+                quantityDisplay.setAttribute("data-quantity", quantity);
+            });
+        });
+
         document.querySelectorAll(".add-to-cart").forEach(button => {
             button.addEventListener("click", (e) => {
                 e.preventDefault();
-                cart.push({
-                    title: button.getAttribute("data-title"),
-                    price: parseFloat(button.getAttribute("data-price"))
-                });
+                const card = button.closest(".card");
+                const quantityDisplay = card.querySelector(".quantity-display");
+                const quantity = parseInt(quantityDisplay.getAttribute("data-quantity"));
+                
+                const title = button.getAttribute("data-title");
+                const price = parseFloat(button.getAttribute("data-price"));
+                
+                const existingItem = cart.find(item => item.title === title);
+                if (existingItem) {
+                    existingItem.quantity += quantity;
+                } else {
+                    cart.push({
+                        title: title,
+                        price: price,
+                        quantity: quantity
+                    });
+                }
                 updateCart();
             });
         });
     });
 
-// Skapar själva Formen här ( Kolla hur denna fungerar)
-// Varje del är för formen kan ha gjort fel på några delar men använde mig av att göra "samma sak" på alla
+
 document.getElementById("order-form").addEventListener("submit", function(e) {
     e.preventDefault();
     let valid = true;
@@ -123,8 +158,7 @@ document.getElementById("order-form").addEventListener("submit", function(e) {
     } else {
         document.getElementById("street-error").textContent = "";
     }
-   // ÄNDRA DENNA!! Den vill att man ska skriva 5 digits på rad utan mellanslag men postkod har väl mellanslag? 
-   // Kolla om ni kan fixa borde vara andra raden i  denna kod
+
     const postal = document.getElementById("postal").value.trim();
     const postalRegex = /^\d{5}$/;
     if (!postalRegex.test(postal)) {
@@ -146,8 +180,7 @@ document.getElementById("order-form").addEventListener("submit", function(e) {
         alert("Please add at least one product to your cart first!");
         valid = false;
     }
-// Denna är en pop up som sker när väl allt har skrivits in i formen och en place order har skett! 
-// Ganska tråkig kanske bör göra lite roligare! : ) 
+
     if (valid) {
         alert("Order placed successfully!");
         cart = [];
