@@ -17,7 +17,7 @@ fetch("https://fakestoreapiserver.reactbd.com/tech")
     .then(res => res.json())
     .then(products => {
         products.forEach(product => {
-            // Här kortar vi ner beskrivningen och titeln direkt i templaten
+            
             const shortTitle = product.title.substring(0, 20);
             const shortDesc = product.description.substring(0, 50) + "...";
 
@@ -46,8 +46,7 @@ fetch("https://fakestoreapiserver.reactbd.com/tech")
             `;
             document.getElementById("product-container").innerHTML += card;
         });
-        // Vi behöver inte document.querySelectorAll(".add-to-cart") längre 
-        // eftersom vi använder onclick direkt på knappen ovan.
+        
     });
 
 document.getElementById("order-form").addEventListener("submit", function(e) {
