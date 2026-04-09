@@ -13,7 +13,7 @@ function addToCart(name, price) {
     hasProduct = true;
 }
 
-fetch("https://fakestoreapi.com/products")
+fetch("https://fakestoreapiserver.reactbd.com/tech")
     .then(res => res.json())
     .then(products => {
         products.forEach(product => {
