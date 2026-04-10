@@ -1,4 +1,5 @@
-let cart = [];
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+updateCart();
 
 function updateCart() {
     const cartItems = document.getElementById("cart-items");
@@ -29,6 +30,15 @@ function updateCart() {
             </li>
         `;
     });
+    const myArray = JSON.stringify(cart);
+    localStorage.setItem("cart", myArray);
+
+    cartItems.innerHTML += `
+        <hr>
+        <div class="px-2 pb-2">
+            <button class="btn btn-sm btn-outline-danger w-100" onclick="clearCart()">Clear Cart</button>
+        </div>
+    `;
 
     cartCount.textContent = totalItems;
     cartTotal.textContent = `Total: $${total.toFixed(2)}`;
@@ -37,6 +47,12 @@ function updateCart() {
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCart();
+}
+
+function clearCart() {
+    cart = [];
+    updateCart();
+    localStorage.removeItem("cart");
 }
 
 fetch("https://dummyjson.com/products")
@@ -75,7 +91,6 @@ fetch("https://dummyjson.com/products")
             document.getElementById("product-container").innerHTML += card;
         });
 
-        // Quantity buttons functionality
         document.querySelectorAll(".quantity-btn").forEach(button => {
             button.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -188,3 +203,5 @@ document.getElementById("order-form").addEventListener("submit", function(e) {
         document.getElementById("order-form").reset();
     }
 });
+
+//localStorage.setItem("test", "Hej Manolis!");
