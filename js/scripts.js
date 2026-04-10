@@ -39,14 +39,14 @@ function removeFromCart(index) {
     updateCart();
 }
 
-fetch("https://fakestoreapi.com/products")
+fetch("https://dummyjson.com/products")
     .then(res => res.json())
-    .then(products => {
-        products.forEach(product => {
+    .then(data => {
+        data.products.forEach(product => {
             const card = `
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <img class="card-img-top p-3" src="${product.image}" style="height: 250px; object-fit: contain;" />
+                        <img class="card-img-top p-3" src="${product.thumbnail}" style="height: 250px; object-fit: contain;" />
                         <div class="card-body p-4">
                             <div class="text-center">                            
                                 <h5 class="fw-bolder">${product.title}</h5>

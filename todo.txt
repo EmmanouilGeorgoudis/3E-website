@@ -1,7 +1,7 @@
 Jag vill öva på att byta API. Jag har kollat på vad fakestoreapi ger för Json via
 devtools och fetch/XHR
 
-Exempel från https://fakestoreapi.com/products
+Exempel från https://fakestoreapiserver.reactbd.com/tech
 [{
     "id": 1,
     "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
